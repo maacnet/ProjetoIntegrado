@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BancosAPI.Models;
 using BancosAPI.Context;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SeuProjeto.Controllers
 {
@@ -22,6 +23,7 @@ namespace SeuProjeto.Controllers
 
         // GET: api/Bancos
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Banco>>> GetBancos()
         {
             try
@@ -37,6 +39,7 @@ namespace SeuProjeto.Controllers
 
         // GET: api/Bancos/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Banco>> GetBanco(int id)
         {
             try
@@ -56,6 +59,7 @@ namespace SeuProjeto.Controllers
 
         // POST: api/Bancos
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Banco>> PostBanco(Banco banco)
         {
             try
@@ -72,6 +76,7 @@ namespace SeuProjeto.Controllers
 
         // PUT: api/Bancos/5
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutBanco(int id, Banco banco)
         {
             if (id != banco.NumeroBancos)
@@ -94,6 +99,7 @@ namespace SeuProjeto.Controllers
 
         // DELETE: api/Bancos/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteBanco(int id)
         {
             try
