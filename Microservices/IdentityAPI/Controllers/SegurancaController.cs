@@ -51,7 +51,7 @@ namespace IdentityAPI.Controllers
 
         private bool ValidarUsuario(Usuario loginDetalhes)
         {
-            if (loginDetalhes.NomeUsuario == "maacnet" && loginDetalhes.Senha == "123")
+            if (loginDetalhes.NomeUsuario == "maacnet@teste.com" && loginDetalhes.Senha == "*senhaForte2024*")
             {
                 return true;
             }
