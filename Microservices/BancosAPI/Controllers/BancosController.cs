@@ -8,6 +8,7 @@ using BancosAPI.Models;
 using BancosAPI.Context;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Caching.Memory;
+using System.Security.Claims;
 
 namespace BancoAPI.Controllers
 {
@@ -26,11 +27,15 @@ namespace BancoAPI.Controllers
 
         // GET: api/Bancos
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "ConsultarBancos")]
         public async Task<ActionResult<IEnumerable<Banco>>> GetBancos()
         {
             try
             {
+
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                var userName = User.FindFirst(ClaimTypes.Name)?.Value;
+                var userRoles = User.FindAll(ClaimTypes.Role).Select(c => c.Value);
 
                 //  obter os bancos do cache
                 if (!_cache.TryGetValue("bancos", out List<Banco>? bancos))
@@ -53,7 +58,7 @@ namespace BancoAPI.Controllers
 
         // GET: api/Bancos/5
         [HttpGet("{id}")]
-        [Authorize]
+        [Authorize(Roles = "ConsultaBancos")]
         public async Task<ActionResult<Banco>> GetBanco(int id)
         {
             try

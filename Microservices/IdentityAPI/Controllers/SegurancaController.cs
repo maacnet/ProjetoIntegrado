@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 
 namespace IdentityAPI.Controllers
@@ -22,7 +23,8 @@ namespace IdentityAPI.Controllers
             bool resultado = ValidarUsuario(loginDetalhes);
             if (resultado)
             {
-                var tokenString = GerarTokenJWT();
+
+                var tokenString = GerarTokenJWT(VerificarRole(loginDetalhes));
                 return Ok(new { token = tokenString });
             }
             else
@@ -31,7 +33,7 @@ namespace IdentityAPI.Controllers
             }
         }
 
-        private string GerarTokenJWT()
+        private string GerarTokenJWT(List<Claim> claims)
         {
             var issuer = _config["Jwt:Issuer"];
             var audience = _config["Jwt:Audience"];
@@ -41,7 +43,7 @@ namespace IdentityAPI.Controllers
 
             var token = new JwtSecurityToken(issuer: issuer, audience: audience,
                                              expires: DateTime.Now.AddMinutes(120), 
-                                             signingCredentials: credentials);
+                                             signingCredentials: credentials,claims:claims);
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var stringToken = tokenHandler.WriteToken(token);
@@ -53,19 +55,51 @@ namespace IdentityAPI.Controllers
         {
             if (loginDetalhes.NomeUsuario == "maacnet@teste.com" && loginDetalhes.Senha == "*senhaForte2024*")
             {
+
                 return true;
+            }
+            
+            if (loginDetalhes.NomeUsuario == "usuario@teste.com" && loginDetalhes.Senha == "*senhaForte2024*")
+            {
+
+                return true;
+            }
+
+            return false;
+
+        }
+
+
+        private List<Claim> VerificarRole(Usuario loginDetalhes)
+        {
+
+            if (loginDetalhes.NomeUsuario == "maacnet@teste.com")
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, "maacnet@teste.com"),
+                    new Claim(ClaimTypes.Role, "InserirBancos"),
+                    // Adicione outras claims conforme necessário
+                };
+
+                return claims;
+
             }
             else
             {
-                return false;
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, "usuario@teste.com"),
+                    new Claim(ClaimTypes.Role, "ConsultarBancos"),
+                };
+
+                return claims;
             }
+           
+
         }
 
     }
-
-
-
-
 
 }
 
