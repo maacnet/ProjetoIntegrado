@@ -7,18 +7,21 @@ using System.Threading.Tasks;
 using BancosAPI.Models;
 using BancosAPI.Context;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Caching.Memory;
 
-namespace SeuProjeto.Controllers
+namespace BancoAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class BancosController : ControllerBase
     {
         private readonly BancoContexto _context;
+        private readonly IMemoryCache _cache;
 
-        public BancosController(BancoContexto context)
+        public BancosController(BancoContexto context,IMemoryCache cache)
         {
             _context = context;
+            _cache = cache;
         }
 
         // GET: api/Bancos
@@ -28,7 +31,17 @@ namespace SeuProjeto.Controllers
         {
             try
             {
-                var bancos = await _context.Bancos.ToListAsync();
+
+                //  obter os bancos do cache
+                if (!_cache.TryGetValue("bancos", out List<Banco>? bancos))
+                {
+                    // Se não estiver no cache, buscando do banco de dados
+                    bancos = await _context.Bancos.ToListAsync();
+
+                    // Adicionando à memória cache com uma chave "bancos" e expire após 10 minutos
+                    _cache.Set("bancos", bancos, TimeSpan.FromMinutes(10));
+                }
+
                 return Ok(bancos); // Retorna a lista de bancos com status 200 (OK)
             }
             catch (Exception ex)
@@ -36,6 +49,7 @@ namespace SeuProjeto.Controllers
                 return StatusCode(500, new { message = "Erro ao buscar bancos", error = ex.Message });
             }
         }
+
 
         // GET: api/Bancos/5
         [HttpGet("{id}")]
@@ -59,7 +73,7 @@ namespace SeuProjeto.Controllers
 
         // POST: api/Bancos
         [HttpPost]
-        [Authorize]
+        [Authorize (Roles = "InserirBancos")]
         public async Task<ActionResult<Banco>> PostBanco(Banco banco)
         {
             try
