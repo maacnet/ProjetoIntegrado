@@ -17,6 +17,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AssinaturasAPI", "Assinatur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssinaturasAPI", "Microservices\AssinaturasAPI\AssinaturasAPI.csproj", "{334695D3-B784-414B-B2D2-15FD4E57E2BD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ContasFinanceiras", "ContasFinanceiras", "{274B42F8-0202-4DCF-AA5F-32C7ACB63290}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContasFinanceirasAPI", "Microservices\ContasFinanceirasAPI\ContasFinanceirasAPI.csproj", "{C3181E1B-1FB0-4B6D-B582-6F6DC070F700}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,10 @@ Global
 		{334695D3-B784-414B-B2D2-15FD4E57E2BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{334695D3-B784-414B-B2D2-15FD4E57E2BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{334695D3-B784-414B-B2D2-15FD4E57E2BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3181E1B-1FB0-4B6D-B582-6F6DC070F700}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3181E1B-1FB0-4B6D-B582-6F6DC070F700}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3181E1B-1FB0-4B6D-B582-6F6DC070F700}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3181E1B-1FB0-4B6D-B582-6F6DC070F700}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +54,8 @@ Global
 		{3B721BA7-D12B-4A3D-869A-420B8E369F17} = {F2AEC45F-9021-495E-BB1E-5B2BF96A2B07}
 		{62626022-4CED-45B9-83E1-839F24390F75} = {3B4513B8-C7EC-4EA8-A7F0-06644F97464B}
 		{334695D3-B784-414B-B2D2-15FD4E57E2BD} = {62626022-4CED-45B9-83E1-839F24390F75}
+		{274B42F8-0202-4DCF-AA5F-32C7ACB63290} = {3B4513B8-C7EC-4EA8-A7F0-06644F97464B}
+		{C3181E1B-1FB0-4B6D-B582-6F6DC070F700} = {274B42F8-0202-4DCF-AA5F-32C7ACB63290}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1694DC3D-E344-413A-89B2-0B423700C1AE}
